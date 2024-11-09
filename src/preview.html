@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Preview</title>
+<link rel="shortcut icon" href="data:image/x-icon;," type="image/x-icon"> 
+<script type="module">
+    import { atoms, colors, concepts } from './colors.js';
+
+    window.addEventListener('DOMContentLoaded', main);
+
+    function main(){
+        renderColorMap(atomsContent, atoms);
+        renderColorMap(colorsContent, colors);
+        renderColorMap(conceptsContent, concepts);
+    }
+
+    function renderColorMap(target, colors){
+        const defs = ['html {'];
+        for (const key in colors) {
+            const value = colors[key];
+            let color = atoms.foreground;
+            let style = '';
+            if (value instanceof Array) {
+                for (const item of value) {
+                    if (item.startsWith('#')) color = item;
+                    else style = item;
+                }
+            }
+            else {
+                if (value.startsWith('#')) color = value;
+                else style = value;
+            }
+            const element = renderColorSwatch(key, color, style);
+            target.appendChild(element);
+            if (color) {
+                defs.push(`--${key}: ${color};`)
+            }
+        }
+        defs.push("}")
+        const style = document.createElement('style');
+        style.innerHTML = defs.join('\n');
+        target.appendChild(style);
+    }
+
+    function renderColorSwatch(key, color, style) {
+        const element = document.createElement('swatch');
+        switch (style) {
+            case "": break;
+            case "bold": element.style.fontWeight = 'bold'; break;
+            case "underline": element.style.textDecoration = 'underline'; break;
+            case "italic": element.style.fontStyle = 'italic'; break;
+            default: console.warn('unhandled style', arguments);
+        }
+        element.title = key;
+        element.style.background = color;
+        element.textContent = key;
+        return element;
+    }
+</script>
+<style>
+    swatch { 
+        display: inline-block;
+        font-size: 10px;
+        overflow: hidden;
+        word-break: break-all;
+        padding: 4px;
+        width: 64px;
+        height: 64px;
+        color: var(--background);
+    }
+    body {
+        background: var(--background);
+        color: var(--foreground);
+    }
+</style>
+</head>
+<body>
+    <div>
+        <h2>Atoms</h2>
+        <div id="atomsContent"></div>
+    </div>
+    <div>
+        <h2>Colors</h2>
+        <div id="colorsContent"></div>
+    </div>
+    <div>
+        <h2>Concepts</h2>
+        <div id="conceptsContent"></div>
+    </div>
+</body>
+</html>

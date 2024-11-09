@@ -1,0 +1,21 @@
+{
+  "name": "concept",
+  "displayName": "concept",
+  "description": "",
+  "version": "0.0.1",
+  "engines": {
+    "vscode": "^1.95.0"
+  },
+  "categories": [
+    "Themes"
+  ],
+  "contributes": {
+    "themes": [
+      {
+        "label": "concept",
+        "uiTheme": "vs-dark",
+        "path": "./themes/concept-color-theme.json"
+      }
+    ]
+  }
+}
