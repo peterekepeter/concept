@@ -4,9 +4,9 @@
   "description": "WIP Theme, may have substantial changes until stable",
 	"repository": "https://github.com/peterekepeter/concept",
 	"publisher": "peterekepeter",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "engines": {
-    "vscode": "^1.95.0"
+    "vscode": "^1.17.0"
   },
   "categories": [
     "Themes"
