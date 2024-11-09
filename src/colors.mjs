@@ -1,6 +1,6 @@
 export const atoms = {
     background: '#000',
-    foreground: '#fff',
+    foreground: '#888',
     accent: "#007acc",
     foreground_alt: '#bbbbbb',
 }
@@ -12,18 +12,20 @@ export const styles = {
 }
 
 export const concepts = {
-    comments: [styles.italic, '#546e7a'],
-    variables: '#EEFFFF',
+    comments: [styles.italic, '#454'],
+    variables: '#fff',
+    property: '#ffa',
     colors: "#ffffff",
     invalid: "#FF5370",
-    keyword: "#C792EA",
+    keyword: "#666",
     operator: "#89DDFF",
     tag: '#f07178',
-    function: '#82AAFF',
+    function: '#8af',
     local: '#f07178',
-    constant: '#F78C6C',
-    string: '#C3E88D',
-    class: '#FFCB6B',
+    constant: '#f64',
+    string: '#4a6',
+    stringpunctuation: '#7b5',
+    class: '#98f',
     type: '#B2CCD6',
     cssclass: '#B2CCD6',
     submethod: '#FF5370',
@@ -41,15 +43,15 @@ export const concepts = {
     url: styles.underline,
     decorators: '#82AAFF',
     es7bindoperator: '#FF5370',
-    jsonkeylevel0: '#C792EA',
-    jsonkeylevel1: '#FFCB6B',
-    jsonkeylevel2: '#F78C6C',
-    jsonkeylevel3: '#FF5370',
-    jsonkeylevel4: '#C17E70',
-    jsonkeylevel5: '#82AAFF',
-    jsonkeylevel6: '#f07178',
-    jsonkeylevel7: '#C792EA',
-    jsonkeylevel8: '#C3E88D',
+    jsonkeylevel0: '#fff',
+    jsonkeylevel1: '#888',
+    jsonkeylevel2: '#fff',
+    jsonkeylevel3: '#888',
+    jsonkeylevel4: '#fff',
+    jsonkeylevel5: '#888',
+    jsonkeylevel6: '#fff',
+    jsonkeylevel7: '#888',
+    jsonkeylevel8: '#fff',
     markdownplain: '#EEFFFF',
     markdownrawinline: '#C792EA',
     markdowninlinepunctuation: '#65737E',
@@ -73,13 +75,25 @@ export const concepts = {
 
 
 export const colors = {
+    "tab.inactiveBackground": "#111213",
+    "activityBar.background": "#212223",
+    "titleBar.activeBackground": "#212223",
+    "sideBar.background": "#111213",
     "editor.background": atoms.background,
     "editor.foreground": atoms.foreground,
     "activityBarBadge.background": atoms.accent,
     "sideBarTitle.foreground": atoms.foreground_alt,
 }
 
-/** @type {Record<string, keyof concepts>} */
+export const semantics = {
+    "class": concepts.class,
+    "keyword": concepts.keyword,
+    "variable": concepts.variables,
+    "type": concepts.class,
+    "operator": concepts.operator,
+    "property": concepts.property,
+}
+
 export const scopes = {
 
     // Comment
@@ -102,10 +116,11 @@ export const scopes = {
     "storage.type": concepts.keyword,
     "storage.modifier": concepts.keyword,
 
+    "string.quoted punctuation.definition.string": concepts.stringpunctuation,
     // Operators, Misc
-    "keyword.control": concepts.operator,
+    "keyword.operator": concepts.operator,
+    "keyword.control": concepts.keyword,
     "constant.other.color": concepts.operator,
-    "punctuation": concepts.operator,
     "meta.tag": concepts.operator,
     "punctuation.definition.tag": concepts.operator,
     "punctuation.separator.inheritance.php": concepts.operator,
@@ -336,6 +351,24 @@ export function getTokenColors() {
         groups[concept].scope.push(scopeName);
     }
     return list;
+}
+
+export function getSemanticTokenColors() {
+    /** @type { Record<string, string|{ foreground?: string, fontStyle?: string}>} */
+    const result = {};
+    for (const semanticName in semantics) {
+        const semanticValue = semantics[semanticName];
+        const [color,style] = getConceptColorAndStyle(semanticValue);
+        if (color && !style) {
+            result[semanticName] = color;
+        }
+        else {
+            result[semanticName] = {};
+            if (color) result[semanticName].foreground = color;
+            if (style) result[semanticName].fontStyle = style;
+        }
+    }
+    return result;
 }
 
 export function getConceptColorAndStyle(value) {

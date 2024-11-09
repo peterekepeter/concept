@@ -1,0 +1,52 @@
+# This workflow will do a clean installation of node dependencies, cache/restore them, build the source code and run tests across different versions of node
+# For more information see: https://help.github.com/actions/language-and-framework-guides/using-nodejs-with-github-actions
+
+name: CD
+
+on:
+  push:
+    branches: [ "master" ]
+  pull_request:
+    branches: [ "master" ]
+
+jobs:
+
+  publish:
+    if: github.ref == 'refs/heads/master'
+    # needs: 
+    name: Publish
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v4
+    - uses: actions/setup-node@v4
+      with:
+        cache: 'npm'
+        
+    # - run: npm ci
+    # - run: npm run prepublish
+
+    - run: node src/generate.mjs
+
+    - uses: JS-DevTools/npm-publish@v3
+      id: publish
+      with:
+        token: ${{ secrets.NPM_TOKEN }}
+
+    - if: ${{ steps.publish.outputs.type }}
+      run: npm run vscode:prepublish
+    
+    - if: ${{ steps.publish.outputs.type }}
+      name: Publish to Open VSX Registry
+      uses: HaaLeo/publish-vscode-extension@v1
+      id: publishToOpenVSX
+      with:
+        pat: ${{ secrets.OPEN_VSX_TOKEN }}
+    - if: ${{ steps.publish.outputs.type }}
+      name: Publish to Visual Studio Marketplace
+      uses: HaaLeo/publish-vscode-extension@v1
+      with:
+        pat: ${{ secrets.VS_MARKETPLACE_TOKEN }}
+        registryUrl: https://marketplace.visualstudio.com
+        extensionFile: ${{ steps.publishToOpenVSX.outputs.vsixPath }}
+        
