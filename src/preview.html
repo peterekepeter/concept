@@ -4,7 +4,7 @@
 <title>Preview</title>
 <link rel="shortcut icon" href="data:image/x-icon;," type="image/x-icon"> 
 <script type="module">
-    import { atoms, colors, concepts } from './colors.js';
+    import { atoms, colors, concepts, scopes } from './colors.mjs';
 
     window.addEventListener('DOMContentLoaded', main);
 
@@ -12,6 +12,7 @@
         renderColorMap(atomsContent, atoms);
         renderColorMap(colorsContent, colors);
         renderColorMap(conceptsContent, concepts);
+        renderColorMap(scopesContent, scopes);
     }
 
     function renderColorMap(target, colors){
@@ -86,6 +87,10 @@
     <div>
         <h2>Concepts</h2>
         <div id="conceptsContent"></div>
+    </div>
+    <div>
+        <h2>Scopes</h2>
+        <div id="scopesContent"></div>
     </div>
 </body>
 </html>
