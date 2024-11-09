@@ -5,45 +5,29 @@ name: CD
 
 on:
   push:
-    branches: [ "master" ]
+    branches: [ "main" ]
   pull_request:
-    branches: [ "master" ]
+    branches: [ "main" ]
 
 jobs:
 
   publish:
-    if: github.ref == 'refs/heads/master'
-    # needs: 
+    if: github.ref == 'refs/heads/main'
     name: Publish
     runs-on: ubuntu-latest
     
     steps:
     - uses: actions/checkout@v4
-    - uses: actions/setup-node@v4
-      with:
-        cache: 'npm'
-        
-    # - run: npm ci
-    # - run: npm run prepublish
 
     - run: node src/generate.mjs
-
-    - uses: JS-DevTools/npm-publish@v3
-      id: publish
-      with:
-        token: ${{ secrets.NPM_TOKEN }}
-
-    - if: ${{ steps.publish.outputs.type }}
-      run: npm run vscode:prepublish
     
-    - if: ${{ steps.publish.outputs.type }}
-      name: Publish to Open VSX Registry
+    - name: Publish to Open VSX Registry
       uses: HaaLeo/publish-vscode-extension@v1
       id: publishToOpenVSX
       with:
         pat: ${{ secrets.OPEN_VSX_TOKEN }}
-    - if: ${{ steps.publish.outputs.type }}
-      name: Publish to Visual Studio Marketplace
+    
+    - name: Publish to Visual Studio Marketplace
       uses: HaaLeo/publish-vscode-extension@v1
       with:
         pat: ${{ secrets.VS_MARKETPLACE_TOKEN }}
