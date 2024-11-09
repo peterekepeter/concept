@@ -28,22 +28,17 @@ jobs:
 
     - run: node src/generate.mjs
 
-    - uses: JS-DevTools/npm-publish@v3
-      id: publish
-      with:
-        token: ${{ secrets.NPM_TOKEN }}
 
-    - if: ${{ steps.publish.outputs.type }}
-      run: npm run vscode:prepublish
+    # - if: ${{ steps.publish.outputs.type }}
+    #   run: npm run vscode:prepublish
     
-    - if: ${{ steps.publish.outputs.type }}
-      name: Publish to Open VSX Registry
+    - name: Publish to Open VSX Registry
       uses: HaaLeo/publish-vscode-extension@v1
       id: publishToOpenVSX
       with:
         pat: ${{ secrets.OPEN_VSX_TOKEN }}
-    - if: ${{ steps.publish.outputs.type }}
-      name: Publish to Visual Studio Marketplace
+    
+    - name: Publish to Visual Studio Marketplace
       uses: HaaLeo/publish-vscode-extension@v1
       with:
         pat: ${{ secrets.VS_MARKETPLACE_TOKEN }}
