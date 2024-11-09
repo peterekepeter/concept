@@ -1,7 +1,8 @@
 {
   "name": "concept",
   "displayName": "concept",
-  "description": "",
+  "description": "WIP Theme, may have substantial changes until stable",
+	"repository": "https://github.com/peterekepeter/concept",
   "version": "0.0.1",
   "engines": {
     "vscode": "^1.95.0"
@@ -9,6 +10,9 @@
   "categories": [
     "Themes"
   ],
+  "scripts": {
+		"pack": "npx vsce package"
+  },
   "contributes": {
     "themes": [
       {
