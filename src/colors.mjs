@@ -1,8 +1,11 @@
 export const atoms = {
     background: '#000',
-    foreground: '#888',
+    bg_alt: '#212',
+    bg_alt2: '#101',
+    foreground: '#aaa',
     accent: "#007acc",
     foreground_alt: '#bbbbbb',
+    keyword: "#868",
 }
 
 export const styles = {
@@ -12,20 +15,22 @@ export const styles = {
 }
 
 export const concepts = {
-    comments: [styles.italic, '#454'],
-    variables: '#fff',
-    property: '#ffa',
+    comments: '#454',
+    variables: '#aef',
+    property: '#fea',
+    enumMember: '#eb8',
+    label: [styles.bold, '#f44'],
     colors: "#ffffff",
     invalid: "#FF5370",
-    keyword: "#666",
-    operator: "#89DDFF",
+    keyword: atoms.keyword,
+    operator: [styles.bold, "#fff"],
     tag: '#f07178',
     function: '#8af',
     local: '#f07178',
-    constant: '#f64',
+    constant: '#f44',
     string: '#4a6',
     stringpunctuation: '#7b5',
-    class: '#98f',
+    class: '#f84',
     type: '#B2CCD6',
     cssclass: '#B2CCD6',
     submethod: '#FF5370',
@@ -75,14 +80,23 @@ export const concepts = {
 
 
 export const colors = {
-    "tab.inactiveBackground": "#111213",
-    "activityBar.background": "#212223",
-    "titleBar.activeBackground": "#212223",
-    "sideBar.background": "#111213",
+    "tab.inactiveBackground": atoms.bg_alt2,
+    "activityBar.background": atoms.bg_alt,
+    "titleBar.activeBackground": atoms.bg_alt,
+    "sideBar.background": atoms.bg_alt2,
     "editor.background": atoms.background,
     "editor.foreground": atoms.foreground,
     "activityBarBadge.background": atoms.accent,
     "sideBarTitle.foreground": atoms.foreground_alt,
+    // bracket pairing
+    "editorBracketHighlight.foreground1": atoms.keyword,
+    "editorBracketHighlight.foreground2": "#fea",
+    "editorBracketHighlight.foreground3": atoms.keyword,
+    "editorBracketHighlight.foreground4": "#fea",
+    "editorBracketHighlight.foreground5": atoms.keyword,
+    "editorBracketHighlight.foreground6": "#fea",
+    "editorBracketHighlight.foreground7": atoms.keyword,
+    "editorBracketHighlight.foreground8": "#fea",
 }
 
 export const semantics = {
@@ -92,6 +106,8 @@ export const semantics = {
     "type": concepts.class,
     "operator": concepts.operator,
     "property": concepts.property,
+    "label": concepts.label,
+    "enumMember": concepts.enumMember,
 }
 
 export const scopes = {
@@ -130,6 +146,11 @@ export const scopes = {
     "punctuation.section.embedded": concepts.operator,
     "keyword.other.template": concepts.operator,
     "keyword.other.substitution": concepts.operator,
+
+    // INI
+    "keyword.other.definition.ini": concepts.property,
+    "punctuation.separator.key-value.ini": concepts.keyword,
+    "source.ini": concepts.string,
 
     // Tag
     "entity.name.tag": concepts.tag,
@@ -242,7 +263,7 @@ export const scopes = {
 
     // JSON levels
     "source.json meta.structure.dictionary.json support.type.property-name.json"
-        : concepts.jsonkeylevel0,
+        : concepts.property,
     "source.json meta.structure.dictionary.json meta.structure.dictionary.value.json meta.structure.dictionary.json support.type.property-name.json"
         : concepts.jsonkeylevel1,
     "source.json meta.structure.dictionary.json meta.structure.dictionary.value.json meta.structure.dictionary.json meta.structure.dictionary.value.json meta.structure.dictionary.json support.type.property-name.json"
