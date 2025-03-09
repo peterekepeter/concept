@@ -2,8 +2,8 @@ export const atoms = {
     background: '#000',
     bg_alt: '#212',
     bg_alt2: '#101',
-    foreground: '#aaa',
-    accent: "#007acc",
+    foreground: '#ccc',
+    accent: "#302a8c",
     foreground_alt: '#bbbbbb',
     keyword: "#868",
 }
@@ -28,6 +28,7 @@ export const concepts = {
     function: '#8af',
     local: '#f07178',
     constant: '#f44',
+    constantsymbol: '#f96',
     string: '#4a6',
     stringpunctuation: '#7b5',
     class: '#f84',
@@ -88,6 +89,7 @@ export const colors = {
     "editor.foreground": atoms.foreground,
     "activityBarBadge.background": atoms.accent,
     "sideBarTitle.foreground": atoms.foreground_alt,
+    
     // bracket pairing
     "editorBracketHighlight.foreground1": atoms.keyword,
     "editorBracketHighlight.foreground2": "#fea",
@@ -108,6 +110,7 @@ export const semantics = {
     "property": concepts.property,
     "label": concepts.label,
     "enumMember": concepts.enumMember,
+    "constant": concepts.constant,
 }
 
 export const scopes = {
@@ -119,6 +122,8 @@ export const scopes = {
 
     // Variables
     "string constant.other.placeholder": concepts.variables,
+    "meta.function-call.arguments": concepts.variables, // python uses this for call arguemtns
+    "variable.parameter.function-call": concepts.variables,
 
     // Colors
     "constant.other.color": concepts.colors,
@@ -172,6 +177,7 @@ export const scopes = {
     "string.other.link": concepts.local,
 
     // Number, Constant, Function Argument, Tag Attribute, Embedded
+    "constant": concepts.constantsymbol,
     "constant.numeric": concepts.constant,
     "constant.language": concepts.constant,
     "support.constant": concepts.constant,
@@ -210,6 +216,9 @@ export const scopes = {
     "source.less support.type.property-name": concepts.cssclass,
     "source.stylus support.type.property-name": concepts.cssclass,
     "source.postcss support.type.property-name": concepts.cssclass,
+
+    // Generic object property
+    "meta.attribute": concepts.property,
 
     // sub-methods
     "entity.name.module.js": concepts.submethod,
@@ -351,6 +360,7 @@ export const scopes = {
 
     // Markup - Table
     "markup.table": concepts.markdowntable,
+
 }
 
 export function getTokenColors() {
